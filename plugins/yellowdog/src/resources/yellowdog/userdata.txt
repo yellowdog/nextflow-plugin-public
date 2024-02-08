@@ -1,0 +1,24 @@
+#!/usr/bin/env bash
+if [ -z $YD_AGENT_HOME ]; then
+  echo "YellowDog Agent AGENT_HOME environment variable is not configured. Check that the YellowDog Agent is correctly installed and configured"
+  exit 1
+fi
+
+if ! docker info > /dev/null 2>&1; then
+  echo "YellowDog Nextflow integration requires Docker to be installed and available to the YellowDog Agent process"
+  exit 1
+fi
+
+SCRIPT_FILE=${YD_AGENT_HOME}/bin/nf-fusion
+
+if [ -f "$SCRIPT_FILE" ]; then
+  echo "nf-fusion task already exists, no action performed"
+else
+  echo 'Adding nf-fusion task to agent configuration'
+  echo '
+chmod +x ./taskdata.txt
+sh -c ./taskdata.txt
+' > $SCRIPT_FILE
+  chmod +x $SCRIPT_FILE
+  sed '/^yda.taskTypes:/a \ \ - name: nf-fusion\n    run: nf-fusion' -i ${YD_AGENT_HOME}/application.yaml
+fi

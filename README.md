@@ -1,1 +1,1 @@
-# nextflow-plugin-public
+# YellowDog NextFlow plugin
