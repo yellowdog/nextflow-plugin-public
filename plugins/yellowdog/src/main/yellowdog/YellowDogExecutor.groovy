@@ -53,8 +53,7 @@ class YellowDogExecutor extends Executor implements ExtensionPoint {
     @Override
     TaskHandler createTaskHandler(TaskRun task) {
         checkContainerEnabled(task)
-        YdTaskGroup taskGroup = ydWorkRequirement.getTaskGroupForTask(task)
-        new YellowDogTaskHandler(task, taskGroup)
+        new YellowDogTaskHandler(task, ydWorkRequirement)
     }
 
     @Override

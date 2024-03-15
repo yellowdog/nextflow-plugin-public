@@ -10,18 +10,21 @@ import nextflow.processor.TaskStatus
 import nextflow.trace.TraceRecord
 import yellowdog.platform.YdTask
 import yellowdog.platform.YdTaskGroup
+import yellowdog.platform.YdWorkRequirement
+
+import java.util.function.Supplier
 
 @Slf4j
 @CompileStatic
 class YellowDogTaskHandler extends TaskHandler implements FusionAwareTask {
 
-    private final YdTaskGroup ydTaskGroup
+    private final YdWorkRequirement ydWorkRequirement
 
     private YdTask ydTask
 
-    YellowDogTaskHandler(TaskRun taskRun, YdTaskGroup ydTaskGroup) {
+    YellowDogTaskHandler(TaskRun taskRun, YdWorkRequirement ydWorkRequirement) {
         super(taskRun)
-        this.ydTaskGroup = ydTaskGroup
+        this.ydWorkRequirement = ydWorkRequirement;
     }
 
     @Override
@@ -65,7 +68,7 @@ class YellowDogTaskHandler extends TaskHandler implements FusionAwareTask {
         final config = task.getContainerConfig()
         final containerOpts = task.config.getContainerOptions()
         final cmd = FusionHelper.runWithContainer(launcher, config, task.getContainer(), containerOpts, submit)
-
+        final ydTaskGroup = ydWorkRequirement.getTaskGroupForTask(task)
         ydTask = ydTaskGroup.addTask(task.id, task.config, cmd)
         status = TaskStatus.SUBMITTED
     }

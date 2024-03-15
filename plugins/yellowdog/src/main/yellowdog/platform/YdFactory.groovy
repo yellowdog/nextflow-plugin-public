@@ -7,12 +7,14 @@ import groovy.transform.CompileStatic
 import groovy.transform.TupleConstructor
 import groovy.transform.VisibilityOptions
 import groovy.transform.options.Visibility
+import groovy.util.logging.Slf4j
 import yellowdog.config.WorkRequirementConfig
 import yellowdog.config.WorkerPoolConfig
 
+@Slf4j
+@CompileStatic
 @VisibilityOptions(constructor = Visibility.PRIVATE)
 @TupleConstructor(includeFields = true)
-@CompileStatic
 class YdFactory {
 
     private final PlatformClient ydClient
@@ -57,6 +59,9 @@ class YdFactory {
                 ServicesSchema.defaultSchema(platformUrl),
                 new ApiKey(apiKeyId, apiKeySecret)
         )
+
+        log.info("Platform Client created: {}", platformUrl)
+
         new YdFactory(ydClient, namespace)
     }
 }

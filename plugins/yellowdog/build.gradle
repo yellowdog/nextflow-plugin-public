@@ -63,7 +63,7 @@ dependencies {
     compileOnly 'org.slf4j:slf4j-api:2.0.7'
     compileOnly 'org.pf4j:pf4j:3.4.1'
     // add here plugins dependencies
-    implementation 'co.yellowdog.platform:yellowdog-sdk:7.5.1'
+    implementation 'co.yellowdog.platform:yellowdog-sdk:7.6.6'
 
     // test configuration
     testImplementation "org.codehaus.groovy:groovy:3.0.17"

@@ -7,6 +7,7 @@ import groovy.transform.CompileStatic
 import groovy.transform.TupleConstructor
 import groovy.transform.VisibilityOptions
 import groovy.transform.options.Visibility
+import groovy.util.logging.Slf4j
 import nextflow.exception.AbortOperationException
 import nextflow.processor.TaskConfig
 import nextflow.processor.TaskId
@@ -15,9 +16,10 @@ import yellowdog.Constants
 import java.time.Duration
 import java.util.function.Supplier
 
+@Slf4j
+@CompileStatic
 @VisibilityOptions(constructor = Visibility.PRIVATE)
 @TupleConstructor(includeFields = true)
-@CompileStatic
 class YdTask {
 
     private final String taskId
